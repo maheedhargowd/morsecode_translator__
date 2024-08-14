@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-5m9jp$&+imtp14n!mg!s_^pa3tx-bb5lh*y_!%&*ezb^6ns4%9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['maheedhargowd.pythonanywhere.com']
+ALLOWED_HOSTS = ['maheedhargowd.pythonanywhere.com', 'localhost', '127.0.0.1']
+
 
 
 # Application definition
@@ -37,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'translator'
+    'translator',
+    'whitenoise.runserver_nostatic'
 ]
 
 MIDDLEWARE = [
@@ -71,6 +73,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'morse_code_translator.wsgi.application'
+
 
 
 # Database
@@ -118,11 +121,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
+
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
-ALLOWED_HOSTS = ['your-app-name.herokuapp.com', 'localhost', '127.0.0.1']
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
