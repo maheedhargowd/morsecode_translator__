@@ -7,7 +7,7 @@ if project_home not in sys.path:
     sys.path = [project_home] + sys.path
 
 # Set the DJANGO_SETTINGS_MODULE environment variable to point to your settings file
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'morse_code_translator.settings')
+os.environ['DJANGO_SETTINGS_MODULE'] = 'morse_code_translator.settings'
 
 # Import Django's get_wsgi_application and set the application variable
 from django.core.wsgi import get_wsgi_application
