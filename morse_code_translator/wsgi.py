@@ -1,14 +1,17 @@
 import os
 import sys
 
-# Add your project directory to the sys.path
-project_home = '/home/maheedhargowd/morsecode_translator__'
-if project_home not in sys.path:
-    sys.path = [project_home] + sys.path
+# Activate the virtual environment (this line should be commented out locally if not needed)
+activate_this = '/home/maheedhargowd/.virtualenvs/myenv/bin/activate_this.py'
+if os.path.exists(activate_this):
+    with open(activate_this) as file_:
+        exec(file_.read(), dict(__file__=activate_this))
 
-# Set the DJANGO_SETTINGS_MODULE environment variable to point to your settings file
+path = '/home/maheedhargowd/morsecode_translator__'
+if path not in sys.path:
+    sys.path.append(path)
+
 os.environ['DJANGO_SETTINGS_MODULE'] = 'morse_code_translator.settings'
 
-# Import Django's get_wsgi_application and set the application variable
 from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()
