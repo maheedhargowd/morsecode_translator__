@@ -1,16 +1,14 @@
-"""
-WSGI config for morse_code_translator project.
-
-It exposes the WSGI callable as a module-level variable named ``application``.
-
-For more information on this file, see
-https://docs.djangoproject.com/en/4.1/howto/deployment/wsgi/
-"""
-
 import os
+import sys
 
+# Add your project directory to the sys.path
+project_home = '/home/maheedhargowd/morsecode_translator__'
+if project_home not in sys.path:
+    sys.path = [project_home] + sys.path
+
+# Set the DJANGO_SETTINGS_MODULE environment variable to point to your settings file
+os.environ['DJANGO_SETTINGS_MODULE'] = 'morse_code_translator.settings'
+
+# Import Django's get_wsgi_application and set the application variable
 from django.core.wsgi import get_wsgi_application
-
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'morse_code_translator.settings')
-
 application = get_wsgi_application()
