@@ -22,6 +22,12 @@
             <label>
                 <input type="radio" name="translationOption" value="toEnglish"> Translate Morse Code to English
             </label>
+            <br>
+            <label>
+                <input type="radio" name="translationOption" value="toBraille"> Translate English to Braille
+            </label>
+            
+            
         </section>
 
         <section id="translator" class="hidden">
@@ -38,6 +44,9 @@
                 <label for="outputText" id="outputLabel"></label>
                 <textarea id="outputText" rows="4" readonly></textarea>
             </div>
+            
+            <button id="downloadBraille" class="hidden">Download as Mirror Image (Useful for punching out Braille dots)</button>
+
         </section>
     </main>
 
@@ -48,15 +57,23 @@
                 document.getElementById('translator').classList.remove('hidden');
                 const inputLabel = document.getElementById('inputLabel');
                 const outputLabel = document.getElementById('outputLabel');
+                const downloadButton = document.getElementById('downloadBraille');
                 if (this.value === 'toMorse') {
                     inputLabel.textContent = "Enter English Text:";
                     outputLabel.textContent = "Morse Code:";
+                    downloadButton.classList.add('hidden'); // Hide the download button
                 } else if (this.value === 'toEnglish') {
                     inputLabel.textContent = "Enter Morse Code:";
                     outputLabel.textContent = "Translated English:";
+                    downloadButton.classList.add('hidden'); // Hide the download button
+                } else if (this.value === 'toBraille') {
+                    inputLabel.textContent = "Enter English Text:";
+                    outputLabel.textContent = "Braille Code:";
+                    downloadButton.classList.remove('hidden'); // Display the download button
                 }
             });
         });
+
 
         // Handle the form submission
         document.getElementById('translatorForm').addEventListener('submit', function(event) {
@@ -68,6 +85,8 @@
             if (selectedOption === 'toMorse') {
                 url = "{% url 'translate' %}";
             } else if (selectedOption === 'toEnglish') {
+                url = "{% url 'translate' %}";
+            } else if (selectedOption === 'toBraille') {
                 url = "{% url 'translate' %}";
             }
 
@@ -81,9 +100,39 @@
             })
             .then(response => response.json())
             .then(data => {
-                document.getElementById('outputText').value = selectedOption === 'toMorse' ? data.morseOutput : data.englishOutput;
+                if (selectedOption === 'toMorse') {
+                    document.getElementById('outputText').value = data.morseOutput;
+                } else if (selectedOption === 'toEnglish') {
+                    document.getElementById('outputText').value = data.englishOutput;
+                } else if (selectedOption === 'toBraille') {
+                    document.getElementById('outputText').value = data.brailleOutput;
+                }
+        });
+        document.getElementById('downloadBraille').addEventListener('click', function() {
+                const userInput = document.getElementById('userInput').value.trim();
+                const url = "{% url 'translate' %}";
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({ 'userInput': userInput, 'translationType': 'toBraille', 'download': true })
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                const downloadUrl = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = downloadUrl;
+                a.download = 'mirror_result.brf';
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
             });
         });
+
+    });
     </script>
 </body>
 </html>
