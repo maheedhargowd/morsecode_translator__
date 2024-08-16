@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-5m9jp$&+imtp14n!mg!s_^pa3tx-bb5lh*y_!%&*ezb^6ns4%9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['maheedhargowd.pythonanywhere.com', 'localhost', '127.0.0.1']
 
@@ -59,7 +59,7 @@ ROOT_URLCONF = 'morse_code_translator.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -71,6 +71,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'morse_code_translator.wsgi.application'
 
